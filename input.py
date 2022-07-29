@@ -1,5 +1,6 @@
 import argparse
 
+
 def parse_arguments():
     '''Parse command arguments'''
     parser = argparse.ArgumentParser(description='Retrieve food name'
