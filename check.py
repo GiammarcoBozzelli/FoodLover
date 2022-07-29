@@ -1,6 +1,4 @@
 
-from ast import Break
-
 
 def check_input(args):
     '''Checks that the input food is made of only accepted characters'''
