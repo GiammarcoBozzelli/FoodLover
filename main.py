@@ -10,4 +10,4 @@ if __name__ == '__main__':
     if check_input(arguments):
         print(arguments)
     else:
-        quit  # Check if the input is a valid food in the dataset (Chiara)
+        pass # Check if the input is a valid food in the dataset (Chiara)
