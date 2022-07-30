@@ -6,5 +6,6 @@ def check_input(args):
         return True
     else:
         print('There is something wrong with your food name... Try again '
-              + 'with something like \'Apple\'')
+              + 'with something like \'Apple\' and avoid using special'
+              + ' characters!')
         return False
