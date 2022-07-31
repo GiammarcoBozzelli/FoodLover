@@ -5,8 +5,8 @@ def parse_arguments():
     '''Parse command arguments'''
     parser = argparse.ArgumentParser(description='Retrieve food name'
                                      + 'input from the users')
-    parser.add_argument('food', action='store', nargs='+', help='Input the name of'
-                        + ' the food you would like to know more about',
+    parser.add_argument('food', action='store', nargs='+', help='Input the '
+                        + 'name of the food you would like to know more about',
                         type=str)
     parser.add_argument('-v', action='store_true', help='Increase the '
                         + ' verbosity of the outputs',)

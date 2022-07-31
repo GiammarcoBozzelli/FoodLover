@@ -9,5 +9,6 @@ if __name__ == '__main__':
     arguments = parse_arguments()
     if check_input(arguments):
         print(arguments)
+        # get_info(arguments)  # check if the food is in the dataset
     else:
-        pass # Check if the input is a valid food in the dataset (Chiara)
+        pass
