@@ -12,13 +12,14 @@ def read_dataframe(file_name):
     return df.copy()
 
 
-def search_coordinate(df_data: pd.DataFrame, search_set: set) -> list:
-    nda_values = df_data.values
-    tuple_index = np.where(np.isin(nda_values, [e for e in search_set]))
-    return [(row, col, nda_values[row][col]) for row, col in zip(tuple_index[0], tuple_index[1])]
+def read_dataframe(file_name):
+    df = pd.read_csv(file_name)
 
+    return df.copy()
 
-def get_info(verbose, show, add, protein, calories, carbs, fats):
+def get_info(df, food, verbose, show, add, protein, calories, carbs, fats):
+    row = df.loc[df['name'] == food] #ottengo la riga corrispondente al food specificato dall'utente
+    output = ""
     # TODO: rimuovere pass una volta scritto il codice all'interno del blocco IF
     if verbose == True:
         pass
@@ -27,10 +28,14 @@ def get_info(verbose, show, add, protein, calories, carbs, fats):
     if add == True:
         pass
     if protein == True:
-        pass
+        output += "protein: " + str(row["protein"].values[0]) + "\n"
     if calories == True:
-        pass
+        output += "calories: " + str(row["calories"].values[0]) + "\n"
     if carbs == True:
-        pass
+        output += "carbs: " + str(row["carbohydrate"].values[0]) + "\n"
     if fats == True:
-        pass
+        output += "fats: " + str(row["total_fat"].values[0]) + "\n"
+    return output
+
+
+
