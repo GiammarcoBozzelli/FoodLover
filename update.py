@@ -1,38 +1,90 @@
 from csv import DictWriter
+from email.errors import InvalidMultipartContentTransferEncodingDefect
 
 
 def has_numbers(input_string):
     return any(char.isdigit() for char in input_string)
 
 
-def has_only_numbers(input_string):
-    return all(char.isdigit() for char in input_string)
+def try_parse_int(num):
+    try:
+        int(num)
+        return True
+    except ValueError:
+        return False
+
+
+def try_parse_float(num):
+    try:
+        float(num)
+        return True
+    except ValueError:
+        return False
+
+
+def name_input():
+    stop = False
+    
+    if not has_numbers(user_in := input("Type food name: ")):
+        return user_in
+    else:
+        print("\n", "You are allowed only to use letters for name, TRY AGAIN!", "\n")
+        while not stop:
+            if not has_numbers(user_in := input("Type food name: ")):
+                stop = True
+            else:
+                print("\n", "You are allowed only to use letters for name, TRY AGAIN!", "\n")
+        
+        return user_in
+
+
+def number_input(property, is_float):
+    stop = False
+    
+    if is_float:
+        if try_parse_float(user_in := input(f"Type food {property}: ")):
+            return user_in
+        else:
+            print("\n", f"You are allowed only to use floats for {property}, TRY AGAIN!", "\n")
+            while not stop:
+                if try_parse_float(user_in := input(f"Type food {property}: ")):
+                    stop = True
+                else:
+                    print("\n", f"You are allowed only to use floats for {property}, TRY AGAIN!", "\n")
+            
+            return user_in
+
+    else:
+        if try_parse_int(user_in := input(f"Type food {property}: ")):
+            return user_in
+        else:
+            print("\n", f"You are allowed only to use integers for {property}, TRY AGAIN!", "\n")
+            while not stop:
+                if try_parse_int(user_in := input(f"Type food {property}: "), is_float):
+                    stop = True
+                else:
+                    print("\n", f"You are allowed only to use integers for {property}, TRY AGAIN!", "\n")
+            
+            return user_in
 
 
 def update_dataframe(df):
-    # print(df.columns)
-    # carbohydrate, total_fat, calories, name, protein
-    f_name = input("Type food name: ")
-    f_cal = input("Type food calories: ")
-    f_carb = input("Type food carbs: ")
-    f_fat = input("Type food fats: ")
-    f_prot = input("Type food proteins: ")
-    d = {"name": f_name, "carbohydrate": f_carb, "total_fat": f_fat, "protein": f_prot, "calories": f_cal}
+    food_properties = dict()
+    input("Welcome, here you can add a food to the database...")
+    user_choice = input("WARNING! Quit is allowed only here, do you really want to continue? [Y/n] ")
+    if user_choice == "Y" or user_choice == "y":
+        food_properties["name"] = name_input()
+        food_properties["carbohydrate"] = float(number_input("carbs", is_float = True))
+        food_properties["total_fat"] = float(number_input("fats", is_float = True))
+        food_properties["protein"] = float(number_input("proteins", is_float = True))
+        food_properties["calories"] = int(number_input("calories", is_float = False))
 
-    if not has_numbers(f_name):
-        if has_only_numbers(f_cal) and has_only_numbers(f_carb) and has_only_numbers(f_fat) and has_only_numbers(f_prot):
-            for k in df.columns:
-                if k not in d:
-                    d[k] = None
+        with open("nutrition.csv", "a") as fp:
+            dictwriter_object = DictWriter(fp, fieldnames=food_properties)
+            dictwriter_object.writerow(food_properties)
+            fp.close()
 
-            with open("nutrition.csv", "a") as fp:
-                dictwriter_object = DictWriter(fp, fieldnames=d)
+        print("File modified successfully")
 
-                dictwriter_object.writerow(d)
-
-                fp.close()
-            print("File modified successfully")
-        else:
-            print("Wrong input, please try again")
     else:
-        print("Wrong input, please try again")
+        print("Successfully exit adding process...")
