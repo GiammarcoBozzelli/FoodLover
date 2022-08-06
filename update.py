@@ -1,5 +1,5 @@
 from csv import DictWriter
-from email.errors import InvalidMultipartContentTransferEncodingDefect
+import pandas as pd
 
 
 def has_numbers(input_string):
@@ -73,16 +73,17 @@ def update_dataframe(df):
     input("Welcome, here you can add a food to the database...")
     user_choice = input("WARNING! Quit is allowed only here, do you really want to continue? [Y/n] ")
     if user_choice == "Y" or user_choice == "y":
-        food_properties["name"] = name_input()
-        food_properties["carbohydrate"] = float(number_input("carbs", is_float = True))
-        food_properties["total_fat"] = float(number_input("fats", is_float = True))
-        food_properties["protein"] = float(number_input("proteins", is_float = True))
-        food_properties["calories"] = int(number_input("calories", is_float = False))
+        food_properties["name"] = ["" + str(name_input()) + ""]
+        food_properties["carbohydrate"] = [str(number_input("carbs", is_float = True)) + "g"]
+        food_properties["total_fat"] = [str(number_input("fats", is_float = True)) + "g"]
+        food_properties["protein"] = [str(number_input("proteins", is_float = True)) + " g"]
+        food_properties["calories"] = [int(number_input("calories", is_float = False))]
 
-        with open("nutrition.csv", "a") as fp:
-            dictwriter_object = DictWriter(fp, fieldnames=food_properties)
-            dictwriter_object.writerow(food_properties)
-            fp.close()
+        df_from_dict = pd.DataFrame.from_dict(food_properties)
+        df = pd.concat([df, df_from_dict], ignore_index=True)
+        df.index = range(0, len(df["name"]))
+        df = df[df.columns.drop(list(df.filter(regex="Unnamed")))]
+        df.to_csv("nutrition.csv")
 
         print("File modified successfully")
 
