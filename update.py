@@ -1,4 +1,3 @@
-from csv import DictWriter
 import pandas as pd
 
 
@@ -70,9 +69,10 @@ def number_input(property, is_float):
 
 def update_dataframe(df):
     food_properties = dict()
-    input("Welcome, here you can add a food to the database...")
-    user_choice = input("WARNING! Quit is allowed only here, do you really want to continue? [Y/n] ")
-    if user_choice == "Y" or user_choice == "y":
+    print("Welcome, here you can add a food to the database...")
+    user_choice = input("WARNING! Quit is allowed only here, do you really want to continue? [[Y]/n] ").strip()
+
+    if user_choice == "Y" or user_choice == "y" or user_choice == "":
         food_properties["name"] = ["" + str(name_input()) + ""]
         food_properties["carbohydrate"] = [str(number_input("carbs", is_float = True)) + "g"]
         food_properties["total_fat"] = [str(number_input("fats", is_float = True)) + "g"]
@@ -86,6 +86,5 @@ def update_dataframe(df):
         df.to_csv("nutrition.csv")
 
         print("File modified successfully")
-
-    else:
+    elif user_choice == "N" or user_choice == "n":
         print("Successfully exit adding process...")
