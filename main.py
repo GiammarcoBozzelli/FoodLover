@@ -3,14 +3,16 @@ import pandas as pd
 from input import parse_arguments
 from check import check_input
 
+
 if __name__ == '__main__':
 
     # Retrieve user input from terminal
     # and controls if the input is valid
     arguments = parse_arguments()
-    if check_input(arguments):
-        arguments.food = ''.join(arguments.food).lower()
-        print(arguments)
-        # get_info(arguments)  # check if the food is in the dataset
+    if check_input(arguments):  # check if the food is in the dataset
+        arguments.food = ' '.join(arguments.food).lower()
+        get_info(arguments)  # outputs the required infos
     else:
-        pass
+        print('There is something wrong with your food name... Try again '
+              + 'with something like \'Apple\' and avoid using special'
+              + ' characters or numbers!')
