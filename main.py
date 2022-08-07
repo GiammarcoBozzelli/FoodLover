@@ -12,7 +12,3 @@ if __name__ == '__main__':
     if check_input(arguments):  # check if the food is in the dataset
         arguments.food = ' '.join(arguments.food).lower()
         get_info(arguments)  # outputs the required infos
-    else:
-        print('There is something wrong with your food name... Try again '
-              + 'with something like \'Apple\' and avoid using special'
-              + ' characters or numbers!')
