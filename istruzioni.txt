@@ -1,0 +1,10 @@
+- aprire terminale
+- cd FoodLover
+- git checkout main
+- git pull
+- git checkout CleanData
+- git pull
+- [cmd a cmd c sul file nuovo, cmd a cmd v sul file vecchio; file == CleanDataProva.py]
+- git add CleanDataProva.py
+- git commit -m "Added code for cleaning name column"
+- git push
