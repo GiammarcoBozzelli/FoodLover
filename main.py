@@ -1,7 +1,4 @@
-import argparse
-import pandas as pd
-from input import parse_arguments
-from check import check_input
+from Modules import *
 
 
 if __name__ == '__main__':

@@ -1,6 +1,5 @@
 
 import argparse
-from matplotlib.pyplot import show
 import pandas as pd
 import numpy as np
 from csv import DictWriter
