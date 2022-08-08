@@ -8,7 +8,6 @@ def has_numbers(input_string):
     """Return False if the string contains only letters"""
     return any(char.isdigit() for char in input_string)
 
-
 def try_parse_int(num):
     """Try to parse a string in an intger; return True if parsing works"""
     try:
@@ -30,7 +29,7 @@ def try_parse_float(num):
 def name_input():
     """Control user input for food name"""
     stop = False
-    
+
     if not has_numbers(user_in := input("Type food name: ")):
         # name contains only letters
         return user_in
@@ -43,14 +42,14 @@ def name_input():
                 stop = True
             else:
                 print("\n", "You are allowed only to use letters for name, TRY AGAIN!", "\n")
-        
+
         return user_in
 
 
 def number_input(property, is_float):
     """Control user input for food properties (i.e. fat, calories, carbs, ...)"""
     stop = False
-    
+
     if is_float:
         # property is a float number
         if try_parse_float(user_in := input(f"Type food {property}: ")):
@@ -65,7 +64,7 @@ def number_input(property, is_float):
                     stop = True
                 else:
                     print("\n", f"You are allowed only to use floats for {property}, TRY AGAIN!", "\n")
-            
+
             return user_in
 
     else:
@@ -82,7 +81,7 @@ def number_input(property, is_float):
                     stop = True
                 else:
                     print("\n", f"You are allowed only to use integers for {property}, TRY AGAIN!", "\n")
-            
+
             return user_in
 
 
@@ -121,21 +120,16 @@ def read_dataframe(file_name):
 
     return df.copy()
 
-
-def read_dataframe(file_name):
-    df = pd.read_csv(file_name)
-
-    return df.copy()
-
 def get_info(arguments):
     df = read_dataframe('nutrition.csv')
-    row = df.loc[df['name'] == arguments.food] # ottengo la riga corrispondente al food specificato dall'utente
-    output = f"Name: {arguments.food}\n"
-    # TODO: rimuovere pass una volta scritto il codice all'interno del blocco IF
+    row = df.loc[df['name'] == arguments.food]  # ottengo la riga corrispondente al food specificato dall'utente
+    output = ''
     if arguments.show == True:
-        pass
+        show_food(df)
+        return None
     if arguments.add == True:
         update_dataframe(df)
+        return None
     if arguments.protein == True:
         output += "protein: " + str(row["protein"].values[0]) + "\n"
     if arguments.calories == True:
@@ -150,7 +144,8 @@ def get_info(arguments):
         output += "carbs: " + str(row["carbohydrate"].values[0]) + "\n"
         output += "fats: " + str(row["total_fat"].values[0]) + "\n"
 
-    return output
+    print(f"Name: {arguments.food}\n" + output)
+    return None
 
 def parse_arguments():
     '''Parse command arguments'''
@@ -182,7 +177,7 @@ def check_input(args):
        error message to the user'''
     food_name = ' '.join(args.food).lower()
     df = read_dataframe('nutrition.csv')
-    
+
     if args.show:
         show_food(df)
         quit()
