@@ -13,6 +13,7 @@ class TestInputsValues(unittest.TestCase):
         The function test if passed a food present in the
         progam is able to detect the input as valid
         '''
+        # simulate valid user input
         self.arguments.food = ['Cornstarch']
         self.assertTrue(check_input(self.arguments))
 
@@ -20,6 +21,7 @@ class TestInputsValues(unittest.TestCase):
         '''
         Check if given empty input the progam returns False
         '''
+        # simulate empty input
         with suppress_stdout():
             out = check_input(self.arguments)
         self.assertFalse(out)
@@ -29,6 +31,7 @@ class TestInputsValues(unittest.TestCase):
         Check if given empty input and invalid argument
         the progam returns False
         '''
+        # simulate user input
         self.arguments.protein = True
         with suppress_stdout():
             out = check_input(self.arguments)
@@ -39,6 +42,7 @@ class TestInputsValues(unittest.TestCase):
         The function test if passed a food present in the
         progam is able to detect the input as valid
         '''
+        #simulate user input
         self.arguments.food = ['ciao!32']
         with suppress_stdout():
             out = check_input(self.arguments)
@@ -48,6 +52,7 @@ class TestInputsValues(unittest.TestCase):
         '''
         Test if all arguments work when passed as arguments
         '''
+        # simulate user input
         self.arguments.food = 'cornstarch'
         self.arguments.calories = True
         self.arguments.protein = True
@@ -68,6 +73,7 @@ class TestInputsValues(unittest.TestCase):
         '''
         Test if all arguments work when passed as arguments
         '''
+        # simulate user input
         self.arguments.food = 'cornstarch'
 
         row = self.df.loc[self.df['name'] == self.arguments.food]
