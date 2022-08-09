@@ -15,8 +15,17 @@ class TestInputsValues(unittest.TestCase):
         progam is able to detect the input as valid
         '''
         # simulate valid user input
-        self.arguments.food = ['Cornstarch']
-        self.assertTrue(check_input(self.arguments))
+        outcome_list = []
+
+        # valid name input
+        self.arguments.food = ['cornstarch']
+        outcome_list.append(check_input(self.arguments))
+
+        # valid food name made of more words and uppercases
+        self.arguments.food = ['Eggplant Raw']
+        outcome_list.append(check_input(self.arguments))
+
+        self.assertNotIn(False, outcome_list)
 
     def test_empty_input(self):
         '''
@@ -32,11 +41,19 @@ class TestInputsValues(unittest.TestCase):
         Check if given empty input and invalid argument
         the progam returns False
         '''
+        out = []
         # simulate user input
         self.arguments.protein = True
         with suppress_stdout():
-            out = check_input(self.arguments)
-        self.assertFalse(out)
+            out.append(check_input(self.arguments))
+
+        # add another argument for completion
+        self.arguments.protein = False
+        self.arguments.carbs = True
+        with suppress_stdout():
+            out.append(check_input(self.arguments))
+
+        self.assertNotIn(True, out)
 
     def test_invalid_input(self):
         '''
@@ -47,6 +64,7 @@ class TestInputsValues(unittest.TestCase):
         self.arguments.food = ['ciao!32']
         with suppress_stdout():
             out = check_input(self.arguments)
+
         self.assertFalse(out)
 
     def test_get_info(self):
@@ -88,13 +106,6 @@ class TestInputsValues(unittest.TestCase):
 
         output = f"Name: {self.arguments.food}\n" + output
         self.assertEqual(get_info(self.arguments), output)
-
-    def test_show(self):
-        '''
-        Checks if the program correctly shows all foods
-        starting with the letters specified by the users
-        '''
-        pass
 
     def test_update_dataframe(self):
         '''
