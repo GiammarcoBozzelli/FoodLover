@@ -59,6 +59,7 @@ class TestInputsValues(unittest.TestCase):
         self.arguments.fats = True
         self.arguments.carbs = True
 
+        # create the correct expected output
         row = self.df.loc[self.df['name'] == self.arguments.food]
         output = ''
         output += "protein: " + str(row["protein"].values[0]) + "\n"
@@ -76,6 +77,7 @@ class TestInputsValues(unittest.TestCase):
         # simulate user input
         self.arguments.food = 'cornstarch'
 
+        # create the correct expected output
         row = self.df.loc[self.df['name'] == self.arguments.food]
         output = ''
         output += "protein: " + str(row["protein"].values[0]) + "\n"
