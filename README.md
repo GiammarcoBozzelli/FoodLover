@@ -27,9 +27,11 @@ Press Enter.
 **Now you are ready to try our program!**
 
 You can try using our software by writing :
-```
-python3 main.py <name of a food>```
 
+```
+python3 main.py <name of a food>
+
+```
 
 ## Functionalities 🛰
 
