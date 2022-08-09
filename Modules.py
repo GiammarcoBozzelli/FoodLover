@@ -1,5 +1,7 @@
 import argparse
 import pandas as pd
+from contextlib import contextmanager, suppress
+import sys, os
 
 
 def has_numbers(input_string):
@@ -219,3 +221,16 @@ def show_food(df):
     out = out.reset_index(drop=True)
     print(out['name'])
     return
+
+@contextmanager
+def suppress_stdout():
+    '''
+    Function to suppress terminal prints to improve testing
+    '''
+    with open(os.devnull, "w") as devnull:
+        old_stdout = sys.stdout
+        sys.stdout = devnull
+        try:  
+            yield
+        finally:
+            sys.stdout = old_stdout

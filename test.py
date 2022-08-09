@@ -1,4 +1,4 @@
-from re import T
+
 import unittest
 from Modules import *
 
@@ -7,6 +7,7 @@ class TestInputsValues(unittest.TestCase):
 
     arguments = parse_arguments()
     df = read_dataframe('nutrition.csv')
+
 
     def test_valid_name(self):
         '''
@@ -20,15 +21,19 @@ class TestInputsValues(unittest.TestCase):
         '''
         Check if given empty input the progam returns False
         '''
-        self.assertFalse(check_input(self.arguments))
+        with suppress_stdout():
+            out = check_input(self.arguments)
+        self.assertFalse(out)
 
     def test_invalid_input(self):
         '''
         The function test if passed a food present in the
         progam is able to detect the input as valid
         '''
-        self.arguments.food = ['!321354']
-        self.assertFalse(check_input(self.arguments))
+        self.arguments.food = ['ciao!32']
+        with suppress_stdout():
+            out = check_input(self.arguments)
+        self.assertFalse(out)
     
     def test_get_info(self):
         '''
@@ -48,9 +53,7 @@ class TestInputsValues(unittest.TestCase):
         output += "fats: " + str(row["total_fat"].values[0]) + "\n"
 
         output = f"Name: {self.arguments.food}\n" + output
-        print(output)
         self.assertEqual(get_info(self.arguments),output)
-
 
 
 if __name__ == "__main__":
