@@ -103,6 +103,7 @@ class TestInputsValues(unittest.TestCase):
         # copied the function update_dataframe()
         # to bypass input requirements
         food_properties = dict()
+
         # user decides to modify CSV file
         food_properties["name"] = ['test']
         food_properties["carbohydrate"] = ['20' + "g"]
@@ -125,6 +126,9 @@ class TestInputsValues(unittest.TestCase):
         expected_row["calories"] = [int(20)]
 
         added_row = df.iloc[-1:]
+        # remove test row from the dataframe
+        df.drop(index=df.index[-1], axis=0, inplace=True)
+        df.to_csv("nutrition.csv")
 
         pd_testing.assert_frame_equal(added_row[['name', "total_fat",
                                                  'carbohydrate',
