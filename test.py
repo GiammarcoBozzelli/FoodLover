@@ -8,7 +8,6 @@ class TestInputsValues(unittest.TestCase):
     arguments = parse_arguments()
     df = read_dataframe('nutrition.csv')
 
-
     def test_valid_name(self):
         '''
         The function test if passed a food present in the
@@ -25,6 +24,16 @@ class TestInputsValues(unittest.TestCase):
             out = check_input(self.arguments)
         self.assertFalse(out)
 
+    def test_empty_input_argument(self):
+        '''
+        Check if given empty input and invalid argument
+        the progam returns False
+        '''
+        self.arguments.protein = True
+        with suppress_stdout():
+            out = check_input(self.arguments)
+        self.assertFalse(out)
+
     def test_invalid_input(self):
         '''
         The function test if passed a food present in the
@@ -34,7 +43,7 @@ class TestInputsValues(unittest.TestCase):
         with suppress_stdout():
             out = check_input(self.arguments)
         self.assertFalse(out)
-    
+
     def test_get_info(self):
         '''
         Test if all arguments work when passed as arguments
@@ -44,16 +53,38 @@ class TestInputsValues(unittest.TestCase):
         self.arguments.protein = True
         self.arguments.fats = True
         self.arguments.carbs = True
-        
+
         row = self.df.loc[self.df['name'] == self.arguments.food]
         output = ''
         output += "protein: " + str(row["protein"].values[0]) + "\n"
-        output += "calories: " + str(row["calories"].values[0]) + ' kcal' + "\n"
+        output += "calories: " + str(row["calories"].values[0]) + ' kcal\n'
         output += "carbs: " + str(row["carbohydrate"].values[0]) + "\n"
         output += "fats: " + str(row["total_fat"].values[0]) + "\n"
 
         output = f"Name: {self.arguments.food}\n" + output
-        self.assertEqual(get_info(self.arguments),output)
+        self.assertEqual(get_info(self.arguments), output)
+
+    def test_get_info_no_arguments(self):
+        '''
+        Test if all arguments work when passed as arguments
+        '''
+        self.arguments.food = 'cornstarch'
+
+        row = self.df.loc[self.df['name'] == self.arguments.food]
+        output = ''
+        output += "protein: " + str(row["protein"].values[0]) + "\n"
+        output += "calories: " + str(row["calories"].values[0]) + ' kcal\n'
+        output += "carbs: " + str(row["carbohydrate"].values[0]) + "\n"
+        output += "fats: " + str(row["total_fat"].values[0]) + "\n"
+
+        output = f"Name: {self.arguments.food}\n" + output
+        self.assertEqual(get_info(self.arguments), output)
+
+    def test_add(self):
+        pass
+
+    def test_show(self):
+        pass
 
 
 if __name__ == "__main__":
