@@ -145,8 +145,7 @@ def get_info(arguments):
         output += "carbs: " + str(row["carbohydrate"].values[0]) + "\n"
         output += "fats: " + str(row["total_fat"].values[0]) + "\n"
 
-    print(f"Name: {arguments.food}\n" + output)
-    return None
+    return (f"Name: {arguments.food}\n" + output)
 
 
 def parse_arguments():

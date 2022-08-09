@@ -8,4 +8,4 @@ if __name__ == '__main__':
     arguments = parse_arguments()
     if check_input(arguments):  # check if the food is in the dataset
         arguments.food = ' '.join(arguments.food).lower()
-        get_info(arguments)  # outputs the required infos
+        print(get_info(arguments))  # outputs the required infos
