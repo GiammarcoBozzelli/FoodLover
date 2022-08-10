@@ -21,7 +21,7 @@ Click on the ‘code’ button
 Copy the HTTPS link 
 Type git Use the git clone command along with the copied URL from earlier.
 ```
- $ git clone https://github.com/GiammarcoBozzelli/FoodLover.git
+git clone https://github.com/GiammarcoBozzelli/FoodLover.git
 
 ```
 Press Enter.
